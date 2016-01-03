@@ -29,4 +29,12 @@
 (factorial 4)
 (factorial 5)
 
-(* 4 (/ (* 2 (product square 4 inc-by-two 110)) (product square 3 inc-by-two 111)))
+(define (wallis-pi n)
+  (define (term x)
+    (/ (* 4.0 (square x)) (- (* 4 (square x)) 1)))
+(* 2.0 (product term 1 inc n)))
+
+(wallis-pi 10)
+(wallis-pi 100)
+(wallis-pi 1000)
+(wallis-pi 10000)
