@@ -23,25 +23,20 @@
             (enumerate-interval (+ low 1) high))))
   
 (define (adjoin-position new-row k rest-of-queens)
-  (append (list (cons new-row k)) rest-of-queens))
+  (append (list (cons k new-row)) rest-of-queens))
 
 (define (safe? k positions)
   (let ((target (car positions)))
     (if (null? target)
         false
         (= 0 (length (filter (lambda (position)
-                               (or (= (car target) (car position))
-                                   (= (cdr target) (cdr position))
-                                   (and (= (- (car target) 1) (car position))
-                                        (= (cdr position) (- (cdr target) 1)))
-                                   (and (= (+ (car target) 1) (car position))
-                                        (= (cdr position) (- (cdr target) 1)))
-                                   (and (= (- (car target) 1) (car position))
-                                        (= (cdr position) (+ (cdr target) 1)))
-                                   (and (= (car target) (cdr position))
-                                        (= (car position) (cdr target)))
-                                   (and (= (car target) (cdr target))
-                                        (= (car position) (cdr position)))))
+                               (or
+                                (= (abs (- (car target) (car position)))
+                                   (abs (- (cdr target) (cdr position))))
+                                (= (cdr target) (cdr position))
+                                (= (car target) (car position))
+                                )
+                               )
                              (cdr positions)))))))
 
 (define empty-board nil)
@@ -60,4 +55,4 @@
           (queen-cols (- k 1))))))
   (queen-cols board-size))
 
-(queens 8)
+(length (queens 7))
